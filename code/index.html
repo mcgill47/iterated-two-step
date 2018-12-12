@@ -1,1 +1,139 @@
-<h1>Hello World!</h1>
+<!-- TODO: Make a trial -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<style>
+
+.trialDiv {   
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14pt;
+    border: 1px solid black;
+    padding: 0% 0% 0% 2%;
+    width: 600;
+    height: 400;
+    margin: 0 auto;
+
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.textInCol{
+    padding: 5% 8% 10% 0%; 
+}
+
+.button{
+    border: 1px solid black;
+    padding: 40% 10% 10% 10%;
+}
+
+button{
+    background-color: black;
+}
+
+</style>
+
+<head>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+
+
+
+
+<div id="trial1" class="trialDiv">
+    
+    
+    <div class="row">
+            <div class="column">
+
+                <div align=left class="textInCol">
+                        Season: <b id="season"></b>
+                        <br>Stakes: <b id="stakes"></b></br>
+
+                        <div class="button" align=center>
+                            <input type="radio" name="question1" value="bird"> <i class="fas fa-kiwi-bird"></i> bird
+
+                        </div>
+                </div>
+
+            </div>
+            <div class="column">
+
+                <div align="right" class="textInCol">
+                        Your team: <b id="team"></b>
+                        <br>Your points: <b>0</b></br>
+
+                        <div class="button"  align=center>
+                                <input type="radio" name="question1" value="fish"> <i class="fas fa-fish"></i> fish
+
+                        </div>   
+
+                </div>
+                
+
+            </div>
+
+    </div>
+
+    
+    <!--
+        <div style=text-align:center>
+            <button id="submitButton">submit</button>
+
+        </div>
+
+    -->
+    
+  
+
+</div>
+
+<script>
+
+    // should probably make some kind of object/method to change season at some point 
+    var season = "spring";
+    var currTrial = 0; 
+    var stakes = "1x";
+    var team;
+
+    // define end of experiment 
+    const allTrials = 20; 
+
+    var trialArray = new Array(allTrials);
+
+
+
+    // randomly generate participant's team
+    var teamRand = Math.random();
+
+
+    // function for user interaction 
+    function buttonClicked (){
+        alert(value);
+    }
+
+    if (teamRand > .5) {
+        team = "A";  
+        }   
+    else {
+        team = "B";
+    }      
+
+    // set season and team on the page 
+    document.getElementById("season").innerHTML = season;
+    document.getElementById("team").innerHTML = team;
+
+    //handle user clicks 
+    $('.button').click(buttonClicked);
+
+
+
+</script>
+
+
+
