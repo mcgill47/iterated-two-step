@@ -1,0 +1,30 @@
+.trialDiv {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14pt;
+    border: 1px solid black;
+    padding: 0% 0% 0% 2%;
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+}
+
+.textInCol {
+    padding: 5% 8% 10% 0%;
+}
+
+.button {
+    border: 1px solid black;
+    padding: 40% 10% 10% 10%;
+}
+
+button {
+    background-color: black;
+}

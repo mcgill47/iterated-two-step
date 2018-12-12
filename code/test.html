@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Iterated Two Step — Test</title>
+
+    <!-- CSS Styling -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+    <!-- Main -->
+    <link rel="stylesheet" type="text/css" href="index.css" />
+
+    <!-- JS Imports -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Seed random -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/2.4.4/seedrandom.min.js"></script>
+    <!-- Lodash -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Task container -->
+    <div id="trial1" class="trialDiv">
+        <div class="row">
+            <div class="column">
+                <div align=left class="textInCol">
+                    Season: <b id="season"></b>
+                    <br>Stakes: <b id="stakes"></b></br>
+
+                    <div class="button" align=center>
+                        <input type="radio" name="question1" value="bird"> <i class="fas fa-kiwi-bird"></i> bird
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div align="right" class="textInCol">
+                    Your team: <b id="team"></b>
+                    <br>Your points: <b>0</b></br>
+
+                    <div class="button" align=center>
+                        <input type="radio" name="question1" value="fish"> <i class="fas fa-fish"></i> fish
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main script -->
+    <script src="index.js"></script>
+</body>
+
+</html>
