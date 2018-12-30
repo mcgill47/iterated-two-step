@@ -5,9 +5,27 @@ const team = Math.random() > 0.5 ? "A" : "B";
 Math.seedrandom("Easy-as-123");
 _ = _.runInContext();
 
+// The main object
+const experiment = {
+    // * Data and parameters
+    feedback_text: "#feedbackText",
+	button: "#taskButton", // CHANGE THIS 
+
+	data: [],
+	trial_data: {
+		trial_num: 0,
+        resp: -1,
+        correct: true,
+        rt: -1,
+        feedback_shown: true,
+	}
+
+};
+
 // Define experiment parameters
 const probabilities = [40, 60];
 let currTrial = 0;
+let startTrialTime = new Date();
 const numTrials = 20;
 
 const seasonDict = {
@@ -76,10 +94,75 @@ for (let seasonName in seasonDict) {
 
 
 // TODO: change later
+
+// feedback function: takes right vs wrong as argument, hides trial, and presents feedback
+// hide using jquery.hide
+function giveFeedback (correct){
+    
+    //no matter what: hide trial using jquery's .hide()
+
+    //in html part, create a div/class that is like about giving responses 
+    // then do jquery .show()? 
+    
+    if (correct){
+  // set text equal to you're right 
+    }
+    else{{
+// set text equal to you're wrong 
+    }}
+
+    // display the text on the screen 
+ 
+    //if curTrial <= totalTrials or whatever the var was, display an href link to go to next trial 
+    // explained at 1:39 of tim brady trial 
+}
+
+
+function showTrial(){
+    // set season and team on the page 
+    
+    // set num points on the stage 
+
+    // collect time stamp of starting trial 
+    startTrialTime = new Date ();
+
+}
+
 // function for user interaction
 function buttonClicked() {
-    alert(value);
+
+    var rt = (new Date()) - startTrialTime;
+
+    console.log(rt);
+
+    var resp = $("input[name='question1']:checked").val();
+
+    console.log(resp);
+
+    var trialNum = currTrial; 
+    console.log(currTrial);
+
+
+    console.log(trialArray);
+
+    var dimensions = [ arr.length, arr[0].length ];
+
+
+    //record value of button (input) and save it into data
+
+    //check input value against right answer and save right/wrong into data 
+
+    // record time and save it into data 
+
+    // record trial num and save it into data 
+
+    // update trial num 
+    currTrial++;
+    // call another function that takes right/wrong as argument, hides trial, and gives feedback 
+    // on feedback screen 
+
 }
+
 
 // set season and team on the page
 document.getElementById("season").innerHTML = trialArray[currTrial][0];
