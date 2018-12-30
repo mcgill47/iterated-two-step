@@ -55,6 +55,7 @@ const seasonDict = {
 // to pick a random season: _.sample(seasons);
 let season = seasonDict.spring;
 let stakes = season.stakes;
+let points = 0;
 
 // Define the same trial structure for everyone
 // List the season and the correct answer on that trial
@@ -137,15 +138,41 @@ function buttonClicked() {
 
     var resp = $("input[name='question1']:checked").val();
 
+    console.log("resp: ");
+
     console.log(resp);
 
     var trialNum = currTrial; 
-    console.log(currTrial);
+
+    console.log("trialNum: ");
+    console.log(trialNum);
 
 
-    console.log(trialArray);
+    var trial = trialArray[trialNum];
 
-    var dimensions = [ arr.length, arr[0].length ];
+    console.log("trial: ");
+    console.log(trial);
+
+    var ans = trial[1];
+
+    console.log("ans: ");
+    console.log(ans);
+
+    var correct = (resp === ans);
+
+    console.log("correct: ");
+    console.log(correct);
+
+    // use season to figure out stakes 
+    
+    // use correct and stakes to figure out points 
+    // change points inside css
+
+
+
+
+
+
 
 
     //record value of button (input) and save it into data
