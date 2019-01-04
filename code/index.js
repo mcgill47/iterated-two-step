@@ -134,10 +134,18 @@ function showTrial(){
 function buttonClicked() {
 
     // record rt 
-    var rt = (new Date()) - startTrialTime;
+    experiment.trial_data.rt = (new Date()) - startTrialTime;
 
     // record choice 
     var resp = $("input[name='question1']:checked").val();
+    experiment.trial_data.resp = $("input[name='question1']:checked").val();
+
+
+    console.log("resp");
+    console.log(resp);
+
+    console.log("experiment.trial_data.resp");
+    console.log(experiment.trial_data.resp);
 
     // record trial number 
     var trialNum = currTrial; 
@@ -158,8 +166,8 @@ function buttonClicked() {
     // save everything into trial_data, 
     // then push trial_data into data 
     // and clear the trial_data for the next trial (or something)
-    console.log("trial_data: ");
-    console.log(trial_data);
+ 
+
 
     //record value of button (input) and save it into data
 
