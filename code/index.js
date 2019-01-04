@@ -13,11 +13,11 @@ const experiment = {
 
 	data: [],
 	trial_data: {
-		trial_num: 0,
+		trialNum: -1,
         resp: -1,
+        ans: -1,
         correct: true,
         rt: -1,
-        feedback_shown: true,
 	}
 
 };
@@ -32,7 +32,7 @@ const seasonDict = {
     spring: {
         choices: ["bird", "fish"],
         probabilities: [40, 60],
-        stakes: 1,
+        stakes: 10,
     },
     summer: {
         choices: ["apple", "pear"],
@@ -54,6 +54,7 @@ const seasonDict = {
 // choose the starting season
 // to pick a random season: _.sample(seasons);
 let season = seasonDict.spring;
+
 let stakes = season.stakes;
 let points = 0;
 
@@ -132,48 +133,33 @@ function showTrial(){
 // function for user interaction
 function buttonClicked() {
 
+    // record rt 
     var rt = (new Date()) - startTrialTime;
 
-    console.log(rt);
-
+    // record choice 
     var resp = $("input[name='question1']:checked").val();
 
-    console.log("resp: ");
-
-    console.log(resp);
-
+    // record trial number 
     var trialNum = currTrial; 
 
-    console.log("trialNum: ");
-    console.log(trialNum);
-
-
+    // get correct answer 
     var trial = trialArray[trialNum];
-
-    console.log("trial: ");
-    console.log(trial);
-
     var ans = trial[1];
 
-    console.log("ans: ");
-    console.log(ans);
-
+    // check choice against correct answer 
     var correct = (resp === ans);
 
-    console.log("correct: ");
-    console.log(correct);
+    // update points 
+    points = points + (correct*stakes);
 
-    // use season to figure out stakes 
-    
-    // use correct and stakes to figure out points 
-    // change points inside css
+    // set screen to show point update 
+    document.getElementById("points").innerHTML = points;
 
-
-
-
-
-
-
+    // save everything into trial_data, 
+    // then push trial_data into data 
+    // and clear the trial_data for the next trial (or something)
+    console.log("trial_data: ");
+    console.log(trial_data);
 
     //record value of button (input) and save it into data
 
@@ -188,12 +174,17 @@ function buttonClicked() {
     // call another function that takes right/wrong as argument, hides trial, and gives feedback 
     // on feedback screen 
 
+    // update stuff at bottom of the scream based on team 
+    // update team points? 
+
 }
 
 
-// set season and team on the page
-document.getElementById("season").innerHTML = trialArray[currTrial][0];
+// set variables on the page
+document.getElementById("season").innerHTML = trialArray[currTrial][0]; 
 document.getElementById("team").innerHTML = team;
+document.getElementById("stakes").innerHTML = stakes;
+document.getElementById("points").innerHTML = points;
 
 //handle user clicks
 $('.button').click(buttonClicked);

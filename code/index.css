@@ -25,6 +25,11 @@
     padding: 40% 10% 10% 10%;
 }
 
+.teamInfo{
+    border: 1px solid royalblue;
+    padding: 10% 10% 10% 10%
+}
+
 button {
     background-color: black;
 }
