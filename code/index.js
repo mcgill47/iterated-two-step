@@ -8,20 +8,10 @@ _ = _.runInContext();
 // The main object
 const experiment = {
     // * Data and parameters
-    feedback_text: "#feedbackText",
-	button: "#taskButton", // CHANGE THIS 
-
-	data: [],
-	trial_data: {
-        //team? 
-		trialNum: -1,
-        resp: -1,
-        ans: -1,
-        correct: true,
-        rt: -1,
-        points: -1
-	}
-
+    feedbackText: "#feedbackText",
+    button: "#taskButton", // CHANGE THIS
+    data: [],
+    trialData: {},
 };
 
 // Define experiment parameters
@@ -67,8 +57,10 @@ for (let seasonName in seasonDict) {
     let thisSeason = seasonDict[seasonName];
     for (let thisTrial of _.range(numTrials)) {
         // pick which choice wins on this trial
-        const thisWinner = _.random(0, 100) < thisSeason.probabilities[0] ?
-        thisSeason.choices[0] : thisSeason.choices[1];
+        const thisWinner =
+            _.random(0, 100) < thisSeason.probabilities[0]
+                ? thisSeason.choices[0]
+                : thisSeason.choices[1];
         trialArray.push([seasonName, thisWinner]);
     }
 }
@@ -78,7 +70,6 @@ for (let seasonName in seasonDict) {
 //     XXX
 // }
 
-
 // give me the index and the trial
 // for (let [trialNum, thisTrial] of trialArray.entries()) {
 
@@ -87,7 +78,7 @@ for (let seasonName in seasonDict) {
 // Access at indices
 // let i = 0;
 // for (let thisTrial of trialArray) {
-    // Do things
+// Do things
 //     i++;
 // }
 
@@ -96,114 +87,90 @@ for (let seasonName in seasonDict) {
 //     let thisTrial = trialArray[i];
 // }
 
-
 // TODO: change later
 
 // feedback function: takes right vs wrong as argument, hides trial, and presents feedback
 // hide using jquery.hide
 
+function showTrial() {
+    // set season and team on the page
 
+    // set num points on the stage
 
-function showTrial(){
-    // set season and team on the page 
-    
-    // set num points on the stage 
-
-    // collect time stamp of starting trial 
-    startTrialTime = new Date ();
-
+    // collect time stamp of starting trial
+    startTrialTime = new Date();
 }
 
 // function for user interaction
 function buttonClicked() {
+    const trialData = {
+        rt: new Date() - startTrialTime,
+        resp: $("input[name='question1']:checked").val(),
+        trialNum: currTrial,
+        ans: trialArray[currTrial][1],
+        isCorrect: undefined, // defined later
+        points: undefined, // defined later
 
-    // record rt 
-    experiment.trial_data.rt = (new Date()) - startTrialTime;
+        // Won't work here because we need the actual value stored
+        // Not just a way to get the value
+        // get isCorrect() {
+        //     return this.resp === this.ans;
+        // }
+    };
+    // check choice against correct answer
+    trialData.isCorrect = trialData.resp === trialData.ans;
 
-    // record choice 
-    var resp = $("input[name='question1']:checked").val();
-    experiment.trial_data.resp = $("input[name='question1']:checked").val();
+    // update points
+    points = points + trialData.isCorrect * stakes;
+    trialData.points = points;
 
-    // record trial number 
-    experiment.trial_data.trialNum = currTrial;
-
-    // get correct answer 
-    var trial = trialArray[currTrial];
-    var ans = trial[1];
-
-    experiment.trial_data.ans = trial[1];
-
-    // check choice against correct answer 
-    experiment.trial_data.correct = (experiment.trial_data.resp === experiment.trial_data.ans);
-
-    // update points 
-    points = points + (experiment.trial_data.correct*stakes);
-    experiment.trial_data.points = points; 
-
-    // put points on screen 
+    // put points on screen
     document.getElementById("points").innerHTML = points;
 
+    // then push trialData into data
+    console.log("trialData: ", trialData);
 
-    // then push trial_data into data 
-    console.log("experiment.trial_data");
-    console.log(experiment.trial_data);
- 
-    console.log("experiment.data");
-    console.log(experiment.data);
+    console.log("experiment.data before push: ", experiment.data);
 
-    experiment.data.push(experiment.trial_data);
+    experiment.trialData = trialData;
+    experiment.data.push(trialData);
 
-    console.log("experiment.data");
-    console.log(experiment.data);
+    console.log("experiment.data after push: ", experiment.data);
 
-    // update trial num 
+    // update trial num
     currTrial++;
 
-    // todo: update season and stakes 
-    season = trialArray[currTrial[0]];
+    // todo: update season and stakes
+    season = trialArray[currTrial][0];
+    console.log("currTrial: ", currTrial);
+    console.log("season and stakes: ", season);
 
-    console.log("currTrial");
-    console.log(currTrial);
-
-    console.log("season and stakes");
-    console.log(season);
-
-
-    // call function that takes right/wrong as argument, hides stuff, and gives feedback 
+    // call function that takes right/wrong as argument, hides stuff, and gives feedback
     //feedback(experiment.trial_data.correct);
-    
-
 }
 
 function feedback(correct) {
-    
-    // hide/change stuff on screen 
+    // hide/change stuff on screen
     $(".button").hide();
     $(".teamInfo").hide();
 
-    document.getElementById("season").innerHTML = trialArray[currTrial][0]; 
-    document.getElementById("stakes").innerHTML = trialArray[currTrial][0]; 
+    document.getElementById("season").innerHTML = trialArray[currTrial][0];
+    document.getElementById("stakes").innerHTML = trialArray[currTrial][0];
 
-
-    if (correct){
-       feedback_text = "You're right!";
+    if (correct) {
+        feedbackText = "You're right!";
+    } else {
+        feedbackText = "Nope :(";
     }
 
-    else {
-        feedback_text = "Nope :(";
-    }
-
-    console.log(feedback_text);
-
+    console.log(feedbackText);
 }
 
-
 // set variables on the page
-document.getElementById("season").innerHTML = trialArray[currTrial][0]; 
+document.getElementById("season").innerHTML = trialArray[currTrial][0];
 document.getElementById("team").innerHTML = team;
 document.getElementById("stakes").innerHTML = stakes;
 document.getElementById("points").innerHTML = points;
 
 //handle user clicks
-$('.button').click(buttonClicked);
-
+$(".button").click(buttonClicked);
