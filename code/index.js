@@ -101,25 +101,7 @@ for (let seasonName in seasonDict) {
 
 // feedback function: takes right vs wrong as argument, hides trial, and presents feedback
 // hide using jquery.hide
-function giveFeedback (correct){
-    
-    //no matter what: hide trial using jquery's .hide()
 
-    //in html part, create a div/class that is like about giving responses 
-    // then do jquery .show()? 
-    
-    if (correct){
-  // set text equal to you're right 
-    }
-    else{{
-// set text equal to you're wrong 
-    }}
-
-    // display the text on the screen 
- 
-    //if curTrial <= totalTrials or whatever the var was, display an href link to go to next trial 
-    // explained at 1:39 of tim brady trial 
-}
 
 
 function showTrial(){
@@ -161,11 +143,8 @@ function buttonClicked() {
     // put points on screen 
     document.getElementById("points").innerHTML = points;
 
-    // save everything into trial_data, 
+
     // then push trial_data into data 
-    // and clear the trial_data for the next trial (or something)
-    
-    
     console.log("experiment.trial_data");
     console.log(experiment.trial_data);
  
@@ -177,29 +156,33 @@ function buttonClicked() {
     console.log("experiment.data");
     console.log(experiment.data);
 
-
-    //record value of button (input) and save it into data
-
-    //check input value against right answer and save right/wrong into data 
-
-    // record time and save it into data 
-
-    // record trial num and save it into data 
-
     // update trial num 
     currTrial++;
-    // call another function that takes right/wrong as argument, hides trial, and gives feedback 
-    // on feedback screen 
 
-    // update stuff at bottom of the scream based on team 
-    // update team points? 
+    // todo: update season and stakes 
+    season = trialArray[currTrial[0]];
 
-    feedback(experiment.trial_data.correct);
+    console.log("currTrial");
+    console.log(currTrial);
+
+    console.log("season and stakes");
+    console.log(season);
+
+
+    // call function that takes right/wrong as argument, hides stuff, and gives feedback 
+    //feedback(experiment.trial_data.correct);
+    
+
 }
 
 function feedback(correct) {
+    
+    // hide/change stuff on screen 
     $(".button").hide();
     $(".teamInfo").hide();
+
+    document.getElementById("season").innerHTML = trialArray[currTrial][0]; 
+    document.getElementById("stakes").innerHTML = trialArray[currTrial][0]; 
 
 
     if (correct){
