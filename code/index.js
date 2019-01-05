@@ -13,11 +13,13 @@ const experiment = {
 
 	data: [],
 	trial_data: {
+        //team? 
 		trialNum: -1,
         resp: -1,
         ans: -1,
         correct: true,
         rt: -1,
+        points: -1
 	}
 
 };
@@ -140,33 +142,40 @@ function buttonClicked() {
     var resp = $("input[name='question1']:checked").val();
     experiment.trial_data.resp = $("input[name='question1']:checked").val();
 
-
-    console.log("resp");
-    console.log(resp);
-
-    console.log("experiment.trial_data.resp");
-    console.log(experiment.trial_data.resp);
-
     // record trial number 
-    var trialNum = currTrial; 
+    experiment.trial_data.trialNum = currTrial;
 
     // get correct answer 
-    var trial = trialArray[trialNum];
+    var trial = trialArray[currTrial];
     var ans = trial[1];
 
+    experiment.trial_data.ans = trial[1];
+
     // check choice against correct answer 
-    var correct = (resp === ans);
+    experiment.trial_data.correct = (experiment.trial_data.resp === experiment.trial_data.ans);
 
     // update points 
-    points = points + (correct*stakes);
+    points = points + (experiment.trial_data.correct*stakes);
+    experiment.trial_data.points = points; 
 
-    // set screen to show point update 
+    // put points on screen 
     document.getElementById("points").innerHTML = points;
 
     // save everything into trial_data, 
     // then push trial_data into data 
     // and clear the trial_data for the next trial (or something)
+    
+    
+    console.log("experiment.trial_data");
+    console.log(experiment.trial_data);
  
+    console.log("experiment.data");
+    console.log(experiment.data);
+
+    experiment.data.push(experiment.trial_data);
+
+    console.log("experiment.data");
+    console.log(experiment.data);
 
 
     //record value of button (input) and save it into data
