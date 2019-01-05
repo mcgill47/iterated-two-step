@@ -194,6 +194,24 @@ function buttonClicked() {
     // update stuff at bottom of the scream based on team 
     // update team points? 
 
+    feedback(experiment.trial_data.correct);
+}
+
+function feedback(correct) {
+    $(".button").hide();
+    $(".teamInfo").hide();
+
+
+    if (correct){
+       feedback_text = "You're right!";
+    }
+
+    else {
+        feedback_text = "Nope :(";
+    }
+
+    console.log(feedback_text);
+
 }
 
 
@@ -205,3 +223,4 @@ document.getElementById("points").innerHTML = points;
 
 //handle user clicks
 $('.button').click(buttonClicked);
+
