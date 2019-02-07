@@ -1,3 +1,4 @@
+
 // randomly choose participant's team
 const team = Math.random() > 0.5 ? "A" : "B";
 
@@ -13,6 +14,7 @@ const experiment = {
     data: [],
     trialData: {},
 };
+
 
 // Define experiment parameters
 const probabilities = [40, 60];
@@ -116,7 +118,9 @@ function buttonClicked() {
         // get isCorrect() {
         //     return this.resp === this.ans;
         // }
+
     };
+
     // check choice against correct answer
     trialData.isCorrect = trialData.resp === trialData.ans;
 
@@ -128,36 +132,35 @@ function buttonClicked() {
     document.getElementById("points").innerHTML = points;
 
     // then push trialData into data
-    console.log("trialData: ", trialData);
-
-    console.log("experiment.data before push: ", experiment.data);
-
+    // todo: what are these two things doing differently? 
     experiment.trialData = trialData;
     experiment.data.push(trialData);
-
-    console.log("experiment.data after push: ", experiment.data);
 
     // update trial num
     currTrial++;
 
     // todo: update season and stakes
     season = trialArray[currTrial][0];
-    console.log("currTrial: ", currTrial);
-    console.log("season and stakes: ", season);
+    stakes = seasonDict[season].stakes;
 
+    console.log("trialArray", trialArray);
+    console.log("experiment.data", trialArray[currTrial]);
+
+  
     // call function that takes right/wrong as argument, hides stuff, and gives feedback
-    //feedback(experiment.trial_data.correct);
+    feedback(experiment.trialData.isCorrect);
 }
 
-function feedback(correct) {
+function feedback(isCorrect) {
     // hide/change stuff on screen
     $(".button").hide();
     $(".teamInfo").hide();
 
-    document.getElementById("season").innerHTML = trialArray[currTrial][0];
-    document.getElementById("stakes").innerHTML = trialArray[currTrial][0];
+    // document.getElementById("season").innerHTML = trialArray[currTrial][0];
+    document.getElementById("season").innerHTML = season;
+    document.getElementById("stakes").innerHTML = stakes;
 
-    if (correct) {
+    if (isCorrect) {
         feedbackText = "You're right!";
     } else {
         feedbackText = "Nope :(";
