@@ -21,6 +21,7 @@ const probabilities = [40, 60];
 let currTrial = 0;
 let startTrialTime = new Date();
 const numTrials = 20;
+let mode = "trial";
 
 const seasonDict = {
     spring: {
@@ -105,11 +106,14 @@ function showTrial() {
 
 // function for user interaction
 function buttonClicked() {
+
     const trialData = {
         rt: new Date() - startTrialTime,
         resp: $("input[name='question1']:checked").val(),
         trialNum: currTrial,
         ans: trialArray[currTrial][1],
+        stakes: stakes,
+        team: team,
         isCorrect: undefined, // defined later
         points: undefined, // defined later
 
@@ -139,12 +143,9 @@ function buttonClicked() {
     // update trial num
     currTrial++;
 
-    // todo: update season and stakes
-    season = trialArray[currTrial][0];
-    stakes = seasonDict[season].stakes;
+   
 
-    console.log("trialArray", trialArray);
-    console.log("experiment.data", trialArray[currTrial]);
+    console.log("experiment.data", experiment.data);
 
   
     // call function that takes right/wrong as argument, hides stuff, and gives feedback
@@ -153,20 +154,64 @@ function buttonClicked() {
 
 function feedback(isCorrect) {
     // hide/change stuff on screen
+
+    mode = "feedback";
+
     $(".button").hide();
     $(".teamInfo").hide();
 
-    // document.getElementById("season").innerHTML = trialArray[currTrial][0];
-    document.getElementById("season").innerHTML = season;
-    document.getElementById("stakes").innerHTML = stakes;
-
+   
     if (isCorrect) {
-        feedbackText = "You're right!";
+        feedbackText = "You're right! \n Press space to continue";
     } else {
-        feedbackText = "Nope :(";
+        feedbackText = "Nope :( You were wrong. \n Press space to continue";
     }
 
+    document.getElementById("feedbackText").innerHTML = feedbackText;
+
     console.log(feedbackText);
+}
+
+function nextTrial(){
+   
+    mode = "trial";
+
+    //TODO: if statement to check if we need another trial 
+
+    console.log("currTrial", currTrial);
+
+    if (currTrial <= numTrials){
+        // do some stuff 
+
+        $('#feedbackText').hide();
+
+         // update season and stakes
+        season = trialArray[currTrial][0];
+        stakes = seasonDict[season].stakes;
+
+         // set season and stakes on screen 
+        document.getElementById("season").innerHTML = season;
+        document.getElementById("stakes").innerHTML = stakes;
+
+        // reset button to be unselected 
+        document.getElementsByClassName('button').checked = false;
+
+
+        // show choices 
+        $(".button").show();
+        $(".teamInfo").show();
+    
+
+    
+    }
+
+    else{
+        // do exit stuff
+
+        console.log("seems like the experiment is over");
+    }
+
+
 }
 
 // set variables on the page
@@ -177,3 +222,9 @@ document.getElementById("points").innerHTML = points;
 
 //handle user clicks
 $(".button").click(buttonClicked);
+
+$(document).on('keypress',function(s) {
+    if(s.which == 32 && mode == "feedback") {
+        nextTrial();
+    }
+});

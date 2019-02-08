@@ -6,30 +6,47 @@
     width: 600px;
     height: 400px;
     margin: 0 auto;
+    position: relative;
 }
 
 .row {
     display: flex;
+    position: relative;
 }
 
 .column {
     flex: 50%;
+    position:relative;
+}
+
+#feedbackText{
+    font-size: 40 pt;
+    color: red;
+    position: absolute;
+    left: 80 px;
+    top: 80 px;
+    align-content: center;
+    border: 1px solid black;
 }
 
 .textInCol {
     padding: 5% 8% 10% 0%;
+    position:static;
 }
 
 .button {
     border: 1px solid black;
     padding: 40% 10% 10% 10%;
+    position: static;
 }
 
 .teamInfo{
     border: 1px solid royalblue;
-    padding: 10% 10% 10% 10%
+    padding: 10% 10% 10% 10%;
+    position: static;
 }
 
 button {
     background-color: black;
+    position:static;
 }
