@@ -23,6 +23,12 @@ let startTrialTime = new Date();
 const numTrials = 20;
 let mode = "trial";
 
+// button press key codes 
+const spacebar = 32;
+const left_key = 106;
+const right_key = 107;
+
+
 const seasonDict = {
     spring: {
         choices: ["bird", "fish"],
@@ -68,6 +74,11 @@ for (let seasonName in seasonDict) {
     }
 }
 
+let choices = {
+    left: "bird",
+    right: "fish"
+};
+
 // Do the trials, 4 different ways
 // for (let thisTrial of trialArray) {
 //     XXX
@@ -105,11 +116,13 @@ function showTrial() {
 }
 
 // function for user interaction
-function buttonClicked() {
+function buttonClicked(key) {
+
+    console.log(key);
 
     const trialData = {
         rt: new Date() - startTrialTime,
-        resp: $("input[name='question1']:checked").val(),
+        //resp: $("input[name='question1']:checked").val(),
         trialNum: currTrial,
         ans: trialArray[currTrial][1],
         stakes: stakes,
@@ -221,10 +234,41 @@ document.getElementById("stakes").innerHTML = stakes;
 document.getElementById("points").innerHTML = points;
 
 //handle user clicks
-$(".button").click(buttonClicked);
+//$(".button").click(buttonClicked);
 
-$(document).on('keypress',function(s) {
-    if(s.which == 32 && mode == "feedback") {
+
+$(document).on('keypress',function(e) {
+    console.log("a key was pressed");
+    console.log(e.which);
+
+    if(e.which == (left_key || right_key) && mode == "trial") {
+        
+        console.log("IT WAS LEFT OR RIGHT");
+
+        if (e.which == left_key){
+            key = "left";
+
+            //choice = choices[key];
+            console.log("choice", choices[key]);
+        }
+
+        if (e.which == right_key){
+            key = "right";
+
+            //choice = choices[key];
+            console.log("choice", choices[key]);
+        }
+        
+        
+        buttonClicked(key);
+
+
+    }
+});
+
+
+$(document).on('keypress',function(e) {
+    if(e.which == spacebar && mode == "feedback") {
         nextTrial();
     }
 });
