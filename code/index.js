@@ -248,6 +248,8 @@ function endExperiment (){
 function instructions (){
     
     mode = "instructions";
+    
+    console.log ("instructions");
 
     $(".button").hide();
     $(".teamInfo").hide();
@@ -257,7 +259,7 @@ function instructions (){
     document.getElementById("feedbackText").innerHTML = feedbackText;
     $('#feedbackText').show();
 
-    beginExperiment();
+    //beginExperiment();
 
 }
 
@@ -326,4 +328,9 @@ $(document).on('keypress',function(e) {
     if(e.which == spacebar && mode != "trial") {
         nextTrial();
     }
+
+    if(e.which == spacebar && mode != "trial") {
+        beginExperiment();
+    }
+
 });
