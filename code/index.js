@@ -25,8 +25,8 @@ let mode = "trial";
 
 // button press key codes 
 const spacebar = 32;
-const left_key = 106;
-const right_key = 107;
+const left_key = 37;
+const right_key = 39;
 
 
 const seasonDict = {
@@ -116,13 +116,15 @@ function showTrial() {
 }
 
 // function for user interaction
-function buttonClicked(key) {
+function buttonClicked(choice) {
 
-    console.log(key);
+    console.log("BUTTON CLICKED FUNCTION WAS PRESSED");
+    console.log("choice in buttonclicked fx", choice);
 
     const trialData = {
         rt: new Date() - startTrialTime,
         //resp: $("input[name='question1']:checked").val(),
+        resp: choice,
         trialNum: currTrial,
         ans: trialArray[currTrial][1],
         stakes: stakes,
@@ -168,6 +170,8 @@ function buttonClicked(key) {
 function feedback(isCorrect) {
     // hide/change stuff on screen
 
+    console.log("FEEDBACK FUNCTION WAS CALLED");
+
     mode = "feedback";
 
     $(".button").hide();
@@ -175,14 +179,16 @@ function feedback(isCorrect) {
 
    
     if (isCorrect) {
-        feedbackText = "You're right! \n Press space to continue";
+        feedbackText = "You're right! <br> Press space to continue";
     } else {
-        feedbackText = "Nope :( You were wrong. \n Press space to continue";
+        feedbackText = "Nope :( You were wrong. <br> Press space to continue";
     }
 
+  
     document.getElementById("feedbackText").innerHTML = feedbackText;
+    $('#feedbackText').show();
 
-    console.log(feedbackText);
+    console.log("feedbackText",feedbackText);
 }
 
 function nextTrial(){
@@ -222,26 +228,74 @@ function nextTrial(){
         // do exit stuff
 
         console.log("seems like the experiment is over");
+        endExperiment();
     }
 
 
 }
 
+function endExperiment (){
+
+    feedbackText = "End of experiment <br> Your responses have been recorded. Your MTURK confirmation code is below:";
+
+    document.getElementById("feedbackText").innerHTML = feedbackText;
+    $('#feedbackText').show();
+
+    mode = "end";
+
+}
+
+function instructions (){
+    
+    mode = "instructions";
+
+    $(".button").hide();
+    $(".teamInfo").hide();
+    $('#feedbackText').hide();
+
+    feedbackText = "ok in this experiment you're going to do x y and z. to determine what team you will be on";
+    document.getElementById("feedbackText").innerHTML = feedbackText;
+    $('#feedbackText').show();
+
+    beginExperiment();
+
+}
+
+
+function beginExperiment(){
+
+    $('#feedbackText').hide();
+
+
+    mode = "trial";
+    document.getElementById("season").innerHTML = trialArray[currTrial][0];
+    document.getElementById("team").innerHTML = team;
+    document.getElementById("stakes").innerHTML = stakes;
+    document.getElementById("points").innerHTML = points;
+
+    $(".button").show();
+    $(".teamInfo").show();
+   
+}
+
+
 // set variables on the page
-document.getElementById("season").innerHTML = trialArray[currTrial][0];
-document.getElementById("team").innerHTML = team;
-document.getElementById("stakes").innerHTML = stakes;
-document.getElementById("points").innerHTML = points;
+
 
 //handle user clicks
 //$(".button").click(buttonClicked);
 
+//beginExperiment ();
+instructions();
 
-$(document).on('keypress',function(e) {
+
+
+$(document).on('keydown',function(e) {
     console.log("a key was pressed");
     console.log(e.which);
 
-    if(e.which == (left_key || right_key) && mode == "trial") {
+    console.log("mode", mode);
+    if((e.which == left_key || e.which == right_key) && mode == "trial") {
         
         console.log("IT WAS LEFT OR RIGHT");
 
@@ -259,8 +313,9 @@ $(document).on('keypress',function(e) {
             console.log("choice", choices[key]);
         }
         
+
         
-        buttonClicked(key);
+        buttonClicked(choices[key]);
 
 
     }
@@ -268,7 +323,7 @@ $(document).on('keypress',function(e) {
 
 
 $(document).on('keypress',function(e) {
-    if(e.which == spacebar && mode == "feedback") {
+    if(e.which == spacebar && mode != "trial") {
         nextTrial();
     }
 });
